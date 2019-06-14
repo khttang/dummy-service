@@ -1,0 +1,162 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>client-test</artifactId>
+	<name>client-test</name>
+	<description>Client test project</description>
+	<parent>
+		<groupId>com.intuit.platform.integration</groupId>
+		<artifactId>dummy-root</artifactId>
+		<version>0.0.0-SNAPSHOT</version>
+		<relativePath>../shared/pom.xml</relativePath>
+	</parent>
+	
+	<properties>
+		<cxf.version>3.2.1</cxf.version>
+		<container.home>/Users/ktang/Servers/apache-tomcat-8.5.13</container.home>		
+		<dummy.ping.url>http://localhost:8080/RESTfulExample/rest/json/metallica/get</dummy.ping.url>
+	</properties>
+	
+	<profiles>
+		<profile>
+			<id>integration</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>start-tomcat</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>stop-tomcat</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+
+						<configuration>
+							<container>
+								<containerId>tomcat8x</containerId>
+								<type>installed</type>
+								<home>${container.home}</home>							
+							</container>
+
+							<configuration>
+								<properties>
+									<cargo.jvmargs>${failsafeArgLine}</cargo.jvmargs>
+								</properties>							
+							</configuration>
+
+							<home>${container.home}</home>
+							<type>local</type>								
+							<deployables>
+								<deployable>
+									<groupId>com.intuit.platform.integration.dummy</groupId>
+								    <artifactId>RESTfulExample</artifactId>
+									<type>war</type>
+									<pingURL>${dummy.ping.url}</pingURL>
+									<pingTimeout>60000</pingTimeout>
+								</deployable>
+							</deployables>								
+
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+    </profiles>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-rs-extension-search</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-rs-extension-providers</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-rs-client</artifactId>
+			<version>3.0.15</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.intuit.platform.integration.dummy</groupId>
+			<artifactId>dummy-common</artifactId>
+			<version>${project.version}</version>		
+		</dependency>
+		
+		<dependency>
+			<groupId>com.intuit.platform.integration.dummy</groupId>
+		    <artifactId>RESTfulExample</artifactId>
+		    	<type>war</type>
+		    <version>${project.version}</version>
+		</dependency>
+								
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<scope>compile</scope>
+		</dependency>		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>compile</scope>
+		</dependency>	
+
+
+   		<!-- For JaCoCo HTML report aggregation. Include this list for both unit test and integration test. --> 
+		<dependency>
+			<groupId>com.intuit.platform.integration.dummy</groupId>
+			<artifactId>module1</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.intuit.platform.integration.dummy</groupId>
+			<artifactId>module2</artifactId>
+			<version>${project.version}</version>				
+		</dependency>
+		<dependency>
+			<groupId>com.intuit.platform.integration.dummy</groupId>
+			<artifactId>module3</artifactId>
+			<version>${project.version}</version>			
+		</dependency>
+		<dependency>
+			<groupId>com.intuit.platform.integration.dummy</groupId>
+			<artifactId>testmodule</artifactId>
+			<version>${project.version}</version>			
+		</dependency>
+		<!-- For JaCoCo HTML report aggregation -->
+
+	</dependencies>
+</project>
