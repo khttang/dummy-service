@@ -1,0 +1,4 @@
+#DEFAULT BUILD.INFO
+build.version=1.0-SNAPSHOT-KYANG
+build.time=08/28/2012 02:00:25 PM
+build.source=//spc/IAM/IdentityUIService

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:encryption="http://www.jasypt.org/schema/encryption"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="environmentVariablesConfiguration"
+		class="com.intuit.platform.integration.ius.config.OIIEnvStringPBEConfig">
+		<constructor-arg index="0" value="PBEWithMD5AndDES" />
+		<constructor-arg index="1" value="APP_ENCRYPTION_PASSWORD" />
+		<constructor-arg index="2" value="mQ##eqqQAypGfgEpMre8$pGN72Z*M4ZG" />
+	</bean>
+
+	<bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="config" ref="environmentVariablesConfiguration" />
+	</bean>
+ 
+	<bean id="encryptablePropertyConfigurer"
+		class="org.jasypt.spring2.properties.EncryptablePropertyPlaceholderConfigurer">
+		<constructor-arg ref="configurationEncryptor" />
+		<property name="ignoreResourceNotFound" value="true"/>		
+		<!-- Placeholders for system properties used in resource location -->
+	    <property name="properties">
+			<props>
+				<prop key="iusapp.home"></prop>
+				<prop key="iusapp.env"></prop>
+			</props>
+		</property>
+		<property name="locations">
+	        <list>
+				<!--
+				<value>file:${iusapp.home}/${iusapp.env}-ius-config.properties</value>
+				<value>classpath*:spring/*-config.${iusapp.env}.properties</value>
+				<value>classpath*:spring/*-config.#{ systemProperties['iusapp.env'] != null and systemProperties['iusapp.env'].length() > 3 ? systemProperties['iusapp.env'].substring(0,3) : '' }-#{ systemProperties['iusapp.env'] != null and systemProperties['iusapp.env'].contains('-') ? systemProperties['iusapp.env'].substring(systemProperties['iusapp.env'].lastIndexOf('-') + 1) : ''}.properties</value>
+				<value>classpath*:spring/*-config.#{ systemProperties['iusapp.env'] != null and systemProperties['iusapp.env'].length() > 3 ? systemProperties['iusapp.env'].substring(0,3) : '' }-#{ systemProperties['iusapp.env'] != null and systemProperties['iusapp.env'].contains('_') ? systemProperties['iusapp.env'].substring(systemProperties['iusapp.env'].lastIndexOf('_') + 1) : ''}.properties</value>
+				<value>classpath*:spring/*-config.#{ systemProperties['iusapp.env'] != null and systemProperties['iusapp.env'].length() > 3 ? systemProperties['iusapp.env'].substring(0,3) : '' }.properties</value>
+				<value>classpath*:spring/*-config.properties</value>
+				-->
+	            <value>classpath*:config.properties</value>	        
+	        </list>
+	    </property>
+ 		<property name="propertiesPersister">
+			<!-- 
+				This bean will allow properties to be overridden
+				by the container component
+			-->
+  		  	<bean class="com.intuit.platform.integration.ius.config.OverriddingPropertiesPersister"/>
+		</property>	    
+	</bean>
+	
+	<bean id="propertyConfigurer" 
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+	    <property name="ignoreResourceNotFound" value="true"/>
+
+		<!-- Placeholders for system properties used in resource location -->
+	    <property name="properties">
+			<props>
+				<prop key="iusapp.home"></prop>
+				<prop key="iusapp.env"></prop>
+			</props>
+		</property>
+
+		<property name="locations">
+	        <list>
+				<!--
+				<value>file:${iusapp.home}/${iusapp.env}-ius-config.properties</value>
+				<value>classpath*:spring/*-config.${iusapp.env}.properties</value>
+				<value>classpath*:spring/*-config.#{ systemProperties['iusapp.env'] != null and systemProperties['iusapp.env'].length() > 3 ? systemProperties['iusapp.env'].substring(0,3) : '' }-#{ systemProperties['iusapp.env'] != null and systemProperties['iusapp.env'].contains('-') ? systemProperties['iusapp.env'].substring(systemProperties['iusapp.env'].lastIndexOf('-') + 1) : ''}.properties</value>
+				<value>classpath*:spring/*-config.#{ systemProperties['iusapp.env'] != null and systemProperties['iusapp.env'].length() > 3 ? systemProperties['iusapp.env'].substring(0,3) : '' }-#{ systemProperties['iusapp.env'] != null and systemProperties['iusapp.env'].contains('_') ? systemProperties['iusapp.env'].substring(systemProperties['iusapp.env'].lastIndexOf('_') + 1) : ''}.properties</value>
+				<value>classpath*:spring/*-config.#{ systemProperties['iusapp.env'] != null and systemProperties['iusapp.env'].length() > 3 ? systemProperties['iusapp.env'].substring(0,3) : '' }.properties</value>
+				<value>classpath*:spring/*-config.properties</value>
+				-->
+				<value>classpath*:config.properties</value>
+	        </list>
+	    </property>
+ 		<property name="propertiesPersister">
+			<!-- 
+				This bean will allow properties to be overridden
+				by the container component
+			-->
+  		  	<bean class="com.intuit.platform.integration.ius.config.OverriddingPropertiesPersister"/>
+		</property>	    
+	</bean>
+	
+</beans>
