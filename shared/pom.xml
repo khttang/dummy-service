@@ -24,7 +24,7 @@
 		<!-- Common Dependency Versions -->
 		<whp-dm-pom.version>1.1.0.5</whp-dm-pom.version>
 		<servlet-api.version>2.5</servlet-api.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<icu4j.version>50.1.1</icu4j.version>
 		<springframework.version>4.3.8.RELEASE</springframework.version>
 		<springws.version>1.5.8</springws.version>
