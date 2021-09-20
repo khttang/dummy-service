@@ -40,7 +40,7 @@
 		<bouncycastle.version>140</bouncycastle.version>
 		<jsharing.version>1.0</jsharing.version>
 		<wss4j.version>1.5.8</wss4j.version>
-		<xmlsec.version>1.4.3</xmlsec.version>
+		<xmlsec.version>2.1.7</xmlsec.version>
 		<xalan.version>2.7.1</xalan.version>
 		<wsdl4j.version>1.6.2</wsdl4j.version>
 		<xmlschema.version>1.4.5</xmlschema.version>
