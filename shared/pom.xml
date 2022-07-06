@@ -44,7 +44,7 @@
 		<xalan.version>2.7.1</xalan.version>
 		<wsdl4j.version>1.6.2</wsdl4j.version>
 		<xmlschema.version>1.4.5</xmlschema.version>
-		<jasypt.version>1.9.0</jasypt.version>
+		<jasypt.version>1.9.2</jasypt.version>
 		<neethi.version>2.0.4</neethi.version>
 		<activemq.version>5.9.0.redhat-610379</activemq.version>
 		<javax-jms.version>1.1</javax-jms.version>
