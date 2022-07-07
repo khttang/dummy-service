@@ -41,7 +41,7 @@
 		<jsharing.version>1.0</jsharing.version>
 		<wss4j.version>1.5.8</wss4j.version>
 		<xmlsec.version>1.4.3</xmlsec.version>
-		<xalan.version>2.7.1</xalan.version>
+		<xalan.version>2.7.2</xalan.version>
 		<wsdl4j.version>1.6.2</wsdl4j.version>
 		<xmlschema.version>1.4.5</xmlschema.version>
 		<jasypt.version>1.9.0</jasypt.version>
